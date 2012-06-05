@@ -103,7 +103,7 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 	JButton																		modsButton				= new JButton("Mod Select");
 	private final JCheckBox										rememberCheckbox	= new JCheckBox("Remember");
 	final JLabel															background				= new JLabel("Loading...");
-	private final JButton											offlineMode				= new JButton("Offline Mode");
+	// private final JButton											offlineMode				= new JButton("Offline Mode");
 	private final JButton											tryAgain					= new JButton("Try Again");
 	final JTextPane														editorPane				= new JTextPane();
 	private final JButton											loginSkin1;
@@ -127,7 +127,6 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 	Container																	loginPane					= new Container();
 	Container																	offlinePane				= new Container();
 	// private final JLabel lblLogo;
-	private final JComboBox						modpackList;
 
 	public LoginForm() {
 		loadLauncherData();
@@ -152,9 +151,9 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 		usernameField.setFont(new Font("Arial", Font.PLAIN, 11));
 		usernameField.addActionListener(this);
 		usernameField.setOpaque(false);
-		offlineMode.setFont(new Font("Arial", Font.PLAIN, 11));
-		offlineMode.setOpaque(false);
-		offlineMode.addActionListener(this);
+		// offlineMode.setFont(new Font("Arial", Font.PLAIN, 11));
+		// offlineMode.setOpaque(false);
+		// offlineMode.addActionListener(this);
 
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -176,15 +175,6 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 				i += 1;
 			}
 		}
-		String[] itemArray = new String[i];
-		modpackList = new JComboBox(items.toArray(itemArray));
-		modpackList.setBounds(10, 10, 328, 100);
-		ComboBoxRenderer renderer = new ComboBoxRenderer();
-		renderer.setPreferredSize(new Dimension(200, 110));
-		modpackList.setRenderer(renderer);
-		modpackList.setMaximumRowCount(3);
-		modpackList.setSelectedItem(SettingsUtil.getModPackSelection());
-		modpackList.addActionListener(this);
 
 		JLabel lblMinecraftUsername = new JLabel("Minecraft Username: ");
 		lblMinecraftUsername.setFont(new Font("Arial", Font.PLAIN, 11));
@@ -283,7 +273,6 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 		contentPane.setLayout(null);
 		rememberCheckbox.setBounds(144, 66, 93, 23);
 		// contentPane.add(lblLogo);
-		contentPane.add(modpackList);
 		optionsButton.setBounds(272, 41, 86, 23);
 		modsButton.setBounds(15, 66, 93, 23);
 		contentPane.add(loginSkin1);
@@ -310,13 +299,13 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 		tryAgain.setFont(new Font("Arial", Font.PLAIN, 12));
 		tryAgain.setBounds(257, 20, 100, 25);
 
-		offlineMode.setOpaque(false);
-		offlineMode.setFont(new Font("Arial", Font.PLAIN, 12));
-		offlineMode.setBounds(257, 52, 100, 25);
+		// offlineMode.setOpaque(false);
+		// offlineMode.setFont(new Font("Arial", Font.PLAIN, 12));
+		// offlineMode.setBounds(257, 52, 100, 25);
 
 		offlinePane.setBounds(473, 362, 372, 99);
 		// offlinePane.add(tryAgain);
-		offlinePane.add(offlineMode);
+		// offlinePane.add(offlineMode);
 		offlinePane.add(offlineMessage);
 		offlinePane.setVisible(false);
 		contentPane.add(offlinePane);
@@ -356,6 +345,7 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 	}
 
 	public void loadLauncherData() {
+		setTitle("Technic Launcher for Digiex MC Server - Loading...");
 		MirrorUtils.updateMirrorsYMLCache();
 		MD5Utils.updateMD5Cache();
 		ModPackListYML.updateModPacksYMLCache();
@@ -366,11 +356,15 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 		LibrariesYML.updateLibrariesYMLCache();
 		ModLibraryYML.updateModLibraryYML();
 
-		if (SettingsUtil.getModPackSelection() != null) {
-			updateBranding();
+		if (ModPackListYML.currentModPack == null) {
+			SettingsUtil.init();
+			GameUpdater.copy(SettingsUtil.settingsFile, ModPackListYML.ORIGINAL_PROPERTIES);
 		} else {
-			setTitle("Technic Launcher - No Modpack Selected");
+			GameUpdater.copy(SettingsUtil.settingsFile, new File(GameUpdater.modpackDir, "launcher.properties"));
 		}
+		String selectedItem = "tekkit";
+		SettingsUtil.setModPack(selectedItem);
+		updateBranding();
 	}
 
 	public void updateBranding() {
@@ -396,7 +390,7 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 				loginButton.setEnabled(true);
 				optionsButton.setEnabled(true);
 				setIconImage(Toolkit.getDefaultToolkit().getImage(ModPackYML.getModPackIcon()));
-				setTitle(String.format("Technic Launcher - %s - (%s)", Main.build, ModPackListYML.currentModPackLabel));
+				setTitle(String.format("Technic Launcher for Digiex MC server - %s - (%s)", Main.build, ModPackListYML.currentModPackLabel));
 				options.reloadSettings();
 				MinecraftYML.updateMinecraftYMLCache();
 				setModLoaderEnabled();
@@ -580,17 +574,6 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 			eventId = "Login";
 			this.usernameField.setSelectedItem(loginSkin2.getText());
 		}
-		if ((source == modpackList)) {
-			if (ModPackListYML.currentModPack == null) {
-				SettingsUtil.init();
-				GameUpdater.copy(SettingsUtil.settingsFile, ModPackListYML.ORIGINAL_PROPERTIES);
-			} else {
-				GameUpdater.copy(SettingsUtil.settingsFile, new File(GameUpdater.modpackDir, "launcher.properties"));
-			}
-			String selectedItem = (String) ((JComboBox) source).getSelectedItem();
-			SettingsUtil.setModPack(selectedItem);
-			updateBranding();
-		}
 		if ((eventId.equals("Login") || eventId.equals(usernameField.getSelectedItem())) && loginButton.isEnabled()) {
 			doLogin();
 		} else if (eventId.equals("Options")) {
@@ -602,14 +585,6 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 			}
 		} else if (eventId.equals("comboBoxChanged")) {
 			updatePasswordField();
-		}
-
-		if (source == offlineMode) {
-			gameUpdater.user = "user";
-			gameUpdater.downloadTicket = "0";
-			offlineMode.setEnabled(false);
-			tryAgain.setEnabled(false);
-			runGame();
 		}
 	}
 

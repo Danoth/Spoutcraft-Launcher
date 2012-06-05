@@ -89,15 +89,11 @@ public class ModpackBuild {
 		Configuration config = ModPackYML.getModPackYML();
 		Map<String, Object> builds = (Map<String, Object>) config.getProperty("builds");
 		String latest = config.getString("latest", null);
-		String recommended = config.getString("recommended", null);
-		String selected = SettingsUtil.getSelectedBuild();
+		//String recommended = config.getString("recommended", null);
+		String digiex = config.getString("digiex", latest);
+		//String selected = SettingsUtil.getSelectedBuild();
 
-		String buildName = selected;
-		if (SettingsUtil.isRecommendedBuild()) {
-			buildName = recommended;
-		} else if (SettingsUtil.isDevelopmentBuild()) {
-			buildName = latest;
-		}
+		String buildName = digiex;
 
 		Map<String, Object> build = (Map<String, Object>) builds.get(buildName);
 		Map<String, Object> libs = (Map<String, Object>) build.get("libraries");

@@ -26,7 +26,7 @@ import org.spoutcraft.launcher.async.Download;
 
 public class ModPackUpdater extends GameUpdater {
 
-	public static final String	defaultModPackName	= "technicssp";
+	public static final String	defaultModPackName	= "tekkit";
 
 	private static final String	baseFallbackURL			= "http://mirror.technicpack.net/Technic/";
 	private static final String	fallbackModsURL			= baseFallbackURL + "mods/";
