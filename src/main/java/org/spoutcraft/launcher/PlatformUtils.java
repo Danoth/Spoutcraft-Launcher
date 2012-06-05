@@ -31,7 +31,7 @@ import javax.swing.JProgressBar;
 
 public class PlatformUtils {
 
-	public static final String	LAUNCHER_DIR	= "techniclauncher";
+	public static final String	LAUNCHER_DIR	= "tekkit_digiex";
 	private static File					workDir				= null;
 
 	public static File getWorkingDirectory() {

@@ -104,6 +104,9 @@ public class LauncherFrame extends Frame implements WindowListener {
 			if (MinecraftUtils.getOptions().getPort() != null) {
 				minecraft.addParameter("port", MinecraftUtils.getOptions().getPort());
 			}
+		}else{
+			minecraft.addParameter("server", "mc.digiex.net");
+			minecraft.addParameter("port", "25565");
 		}
 
 		applet.setStub(minecraft);
