@@ -52,6 +52,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -126,7 +127,7 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 	ModsDialog																mods							= new ModsDialog(ModPackYML.getModList());
 	Container																	loginPane					= new Container();
 	Container																	offlinePane				= new Container();
-	// private final JLabel lblLogo;
+	 private final JLabel lblLogo;
 
 	public LoginForm() {
 		loadLauncherData();
@@ -154,8 +155,7 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 		// offlineMode.setFont(new Font("Arial", Font.PLAIN, 11));
 		// offlineMode.setOpaque(false);
 		// offlineMode.addActionListener(this);
-
-		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+	    setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		setBounds((dim.width - 860) / 2, (dim.height - 500) / 2, 860, 500);
@@ -165,17 +165,10 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 
-		// lblLogo = new JLabel("");
-		// lblLogo.setBounds(8, 0, 294, 99);
-		List<String> items = new ArrayList<String>();
-		int i = 0;
-		for (String item : ModPackListYML.modpackMap.keySet()) {
-			if (!Main.isOffline || GameUpdater.canPlayOffline(item)) {
-				items.add(item);
-				i += 1;
-			}
-		}
-
+		lblLogo = new JLabel("");
+		lblLogo.setBounds(8, 0, 385, 125);
+		lblLogo.setIcon(new ImageIcon(LoginForm.class.getResource("/org/spoutcraft/launcher/splash_logo.png")));
+		
 		JLabel lblMinecraftUsername = new JLabel("Minecraft Username: ");
 		lblMinecraftUsername.setFont(new Font("Arial", Font.PLAIN, 11));
 		lblMinecraftUsername.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -272,7 +265,7 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 		usernameField.setEditable(true);
 		contentPane.setLayout(null);
 		rememberCheckbox.setBounds(144, 66, 93, 23);
-		// contentPane.add(lblLogo);
+		contentPane.add(lblLogo);
 		optionsButton.setBounds(272, 41, 86, 23);
 		modsButton.setBounds(15, 66, 93, 23);
 		contentPane.add(loginSkin1);
@@ -383,7 +376,7 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 			protected void done() {
 				if (options == null) {
 					options = new OptionDialog();
-					options.modPackList = ModPackListYML.modpackMap;
+					//options.modPackList = ModPackListYML.modpackMap;
 					options.setVisible(false);
 				}
 

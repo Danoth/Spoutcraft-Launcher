@@ -46,7 +46,7 @@ public class LauncherFrame extends Frame implements WindowListener {
 	public static final int					SUCCESSFUL_LAUNCH	= 1;
 
 	public LauncherFrame() {
-		super(ModPackListYML.currentModPackLabel);
+		super(ModPackListYML.currentModPackLabel + " for Digiex MC server");
 		super.setVisible(true);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation((dim.width - 870) / 2, (dim.height - 518) / 2);

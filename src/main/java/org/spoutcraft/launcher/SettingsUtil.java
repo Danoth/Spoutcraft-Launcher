@@ -20,8 +20,8 @@ public class SettingsUtil {
 		isLatestLWJGL();
 		isWorldBackup();
 		getLoginTries();
-		isRecommendedBuild();
-		isDevelopmentBuild();
+		//isRecommendedBuild();
+		//isDevelopmentBuild();
 		getMemorySelection();
 	}
 
@@ -48,7 +48,7 @@ public class SettingsUtil {
 	public static void setLoginTries(boolean value) {
 		setProperty("retryLogins", value);
 	}
-
+	/*
 	public static boolean isRecommendedBuild() {
 		return isProperty("recupdate", true);
 	}
@@ -72,7 +72,7 @@ public class SettingsUtil {
 	public static void setDevelopmentBuild(boolean value) {
 		setProperty("devupdate", value);
 	}
-
+	*/
 	public static boolean hasModPack() {
 		return hasProperty("modpack");
 	}

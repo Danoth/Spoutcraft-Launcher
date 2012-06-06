@@ -74,7 +74,7 @@ public class ModPackYML {
 		}
 	}
 
-	private static String getSelectedBuild() {
+	public static String getSelectedBuild() {
 		String selected = null;
 		if (getModPackYMLFile().exists()) {
 			try {
