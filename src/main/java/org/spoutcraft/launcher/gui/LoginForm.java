@@ -87,7 +87,6 @@ import org.spoutcraft.launcher.exception.MCNetworkException;
 import org.spoutcraft.launcher.exception.MinecraftUserNotPremiumException;
 import org.spoutcraft.launcher.exception.NoMirrorsAvailableException;
 import org.spoutcraft.launcher.exception.OutdatedMCLauncherException;
-import org.spoutcraft.launcher.gui.widget.ComboBoxRenderer;
 import org.spoutcraft.launcher.modpacks.ModLibraryYML;
 import org.spoutcraft.launcher.modpacks.ModPackListYML;
 import org.spoutcraft.launcher.modpacks.ModPackUpdater;
@@ -101,7 +100,7 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 	private final JComboBox										usernameField			= new JComboBox();
 	private final JButton											loginButton				= new JButton("Login");
 	JButton																		optionsButton			= new JButton("Options");
-	JButton																		modsButton				= new JButton("Mod Select");
+	//JButton																		modsButton				= new JButton("Mod Select");
 	private final JCheckBox										rememberCheckbox	= new JCheckBox("Remember");
 	final JLabel															background				= new JLabel("Loading...");
 	// private final JButton											offlineMode				= new JButton("Offline Mode");
@@ -146,9 +145,9 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 		optionsButton.setOpaque(false);
 		optionsButton.addActionListener(this);
 		optionsButton.setEnabled(false);
-		modsButton.setFont(new Font("Arial", Font.PLAIN, 11));
-		modsButton.setOpaque(false);
-		modsButton.addActionListener(this);
+		//modsButton.setFont(new Font("Arial", Font.PLAIN, 11));
+		//modsButton.setOpaque(false);
+		//modsButton.addActionListener(this);
 		usernameField.setFont(new Font("Arial", Font.PLAIN, 11));
 		usernameField.addActionListener(this);
 		usernameField.setOpaque(false);
@@ -267,7 +266,7 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 		rememberCheckbox.setBounds(144, 66, 93, 23);
 		contentPane.add(lblLogo);
 		optionsButton.setBounds(272, 41, 86, 23);
-		modsButton.setBounds(15, 66, 93, 23);
+		//modsButton.setBounds(15, 66, 93, 23);
 		contentPane.add(loginSkin1);
 		contentPane.add(loginSkin2);
 
@@ -281,7 +280,7 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 		loginPane.add(purchaseAccount);
 		loginPane.add(wikiLink);
 		loginPane.add(optionsButton);
-		loginPane.add(modsButton);
+		//loginPane.add(modsButton);
 		contentPane.add(loginPane);
 
 		JLabel offlineMessage = new JLabel("Could not connect to minecraft.net");
@@ -323,12 +322,12 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 		order.add(rememberCheckbox);
 		order.add(loginButton);
 		order.add(optionsButton);
-		order.add(modsButton);
+		//order.add(modsButton);
 
 		setFocusTraversalPolicy(new SpoutFocusTraversalPolicy(order));
 
 		// loginButton.setEnabled(true); // enable once logins are read
-		modsButton.setEnabled(false);
+		//modsButton.setEnabled(false);
 		setResizable(false);
 
 		if (Main.isOffline) {
@@ -386,18 +385,18 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 				setTitle(String.format("Technic Launcher for Digiex MC server - %s - (%s)", Main.build, ModPackListYML.currentModPackLabel));
 				options.reloadSettings();
 				MinecraftYML.updateMinecraftYMLCache();
-				setModLoaderEnabled();
+				//setModLoaderEnabled();
 			}
 		};
 		updateThread.execute();
 	}
-
+	/*
 	public void setModLoaderEnabled() {
 		File modLoaderConfig = new File(GameUpdater.modconfigsDir, "ModLoader.cfg");
 		boolean modLoaderExists = modLoaderConfig.exists();
 		modsButton.setEnabled(modLoaderExists);
 	}
-
+	*/
 	@Override
 	public void stateChanged(String fileName, float progress) {
 		int intProgress = Math.round(progress);
@@ -572,11 +571,11 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 		} else if (eventId.equals("Options")) {
 			options.setVisible(true);
 			options.setBounds((int) getBounds().getCenterX() - 250, (int) getBounds().getCenterY() - 75, 300, 325);
-		} else if (eventId.equals(modsButton.getText())) {
+		} /*else if (eventId.equals(modsButton.getText())) {
 			if (ModPackListYML.currentModPack != null) {
 				open(new File(GameUpdater.modconfigsDir, "ModLoader.cfg"));
 			}
-		} else if (eventId.equals("comboBoxChanged")) {
+		}*/ else if (eventId.equals("comboBoxChanged")) {
 			updatePasswordField();
 		}
 	}
@@ -618,7 +617,7 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 		if (user == null || user.isEmpty() || pass == null || pass.isEmpty()) { return; }
 		this.loginButton.setEnabled(false);
 		this.optionsButton.setEnabled(false);
-		this.modsButton.setEnabled(false);
+		//this.modsButton.setEnabled(false);
 		this.loginSkin1.setEnabled(false);
 		this.loginSkin2.setEnabled(false);
 		options.setVisible(false);
@@ -840,7 +839,7 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 	public void enableUI() {
 		loginButton.setEnabled(true);
 		optionsButton.setEnabled(true);
-		modsButton.setEnabled(true);
+		//modsButton.setEnabled(true);
 		loginSkin1.setEnabled(true);
 		loginSkin2.setEnabled(true);
 	}
@@ -876,7 +875,7 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 		} else if (result == LauncherFrame.ERROR_IN_LAUNCH) {
 			loginButton.setEnabled(true);
 			optionsButton.setEnabled(true);
-			modsButton.setEnabled(true);
+			//modsButton.setEnabled(true);
 			loginSkin1.setEnabled(true);
 			loginSkin2.setEnabled(true);
 			progressBar.setVisible(false);
